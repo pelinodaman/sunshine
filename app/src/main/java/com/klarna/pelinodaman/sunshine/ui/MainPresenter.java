@@ -26,7 +26,7 @@ public class MainPresenter implements MainMVPPresenter {
 
     private FusedLocationProviderClient mFusedLocationClient;
 
-    Handler handler;
+    private Handler handler;
 
     public MainPresenter(Context context, MainMVPView view) {
         this.mContext = context;
@@ -35,6 +35,7 @@ public class MainPresenter implements MainMVPPresenter {
 
     @Override
     public void startGettingLocation() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
         handler = new Handler();
         handler.post(myRunnable);
     }
@@ -48,8 +49,6 @@ public class MainPresenter implements MainMVPPresenter {
     };
 
     private void getLocation() {
-        mView.showLoading();
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
 
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED ) {
@@ -82,20 +81,20 @@ public class MainPresenter implements MainMVPPresenter {
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
                 Log.i("Failure", t.toString());
+                mView.onError(t.getMessage());
             }
         });
 
     }
 
-    @Override
-    public void requestPermissions() {
+    private void requestPermissions() {
         String[] permissions = new String[] {Manifest.permission.ACCESS_FINE_LOCATION};
         mView.getViewActivity().requestPermissions(permissions, Const.PERMISSION_ACCESS_FINE_LOCATION);
     }
 
     @Override
     public void onPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if(grantResults.length > 0 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
             if(requestCode == Const.PERMISSION_ACCESS_FINE_LOCATION) {
                 getLocation();
             }

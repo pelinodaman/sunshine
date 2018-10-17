@@ -6,15 +6,9 @@ import com.klarna.pelinodaman.sunshine.model.Weather;
 
 public interface MainMVPView {
 
-    public Activity getViewActivity();
-
-    void showLoading();
-
-    void hideLoading();
+    Activity getViewActivity();
 
     void onError(String message);
 
-    boolean isNetworkConnected();
-
-    void setFields(Weather body);
+    void setFields(Weather weather);
 }

@@ -45,29 +45,17 @@ public class MainActivity extends AppCompatActivity implements MainMVPView {
         return this;
     }
 
-    @Override
-    public void showLoading() {
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
 
     @Override
     public void onError(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean isNetworkConnected() {
-        return false;
-    }
 
     @Override
     public void setFields(Weather weather) {
         textViewSummary.setText(weather.getCurrently().getSummary());
-        textViewTemperature.setText((weather.getCurrently().getTemperature()).intValue() + Const.CELCIUS);
+        textViewTemperature.setText((weather.getCurrently().getTemperature()).intValue() + Const.CELSIUS);
         textViewTimezone.setText(weather.getTimezone());
     }
 

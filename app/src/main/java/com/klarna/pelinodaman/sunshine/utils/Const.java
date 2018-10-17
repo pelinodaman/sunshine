@@ -7,7 +7,7 @@ public class Const {
 
     public static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
 
-    public static final String CELCIUS = "\u00B0";
+    public static final String CELSIUS = "\u00B0";
     public static final int CALL_PERIOD = 1000 * 60;
 
 
